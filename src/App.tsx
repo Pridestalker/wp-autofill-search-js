@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ReactDOM from 'react-dom';
+import { Form } from './lib/Form';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export function render(target: string|HTMLElement|null)
+{
+    if (!target) {
+        throw new Error('No target element or string provided');
+    }
+
+    if (isString(target)) {
+        target = document.querySelector<HTMLElement>(target);
+        if (!target) {
+            return;
+        }
+    }
+
+    const { action, ...set } = target.dataset
+    if (!action) {
+        throw new Error('No action set.');
+    }
+
+    ReactDOM.render(<Form action={action} {...set} />, target);
 }
 
-export default App;
+function isString(target: string | HTMLElement): target is string {
+    return typeof target === 'string';
+}
