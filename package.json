@@ -42,5 +42,8 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.2"
+  },
+  "np": {
+    "yarn": false
   }
 }
